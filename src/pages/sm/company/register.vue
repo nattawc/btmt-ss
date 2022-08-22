@@ -6,15 +6,8 @@
       color="#2baf2b"
     ></loading>
 
-    <div class="">
-      <h4 class="">ลงทะเบียนบริษัท</h4>
-      <hr />
-      <label
-        class="d-block tx-medium tx-uppercase tx-spacing-1 tx-black mg-b-15"
-        >กรุณากรอกข้อมูลบริษัท ผู้ประสานงาน
-        และรายละเอียดที่เกี่ยวข้องให้ครบถ้วน</label
-      >
-      <div class="row row-xs mg-md-t-20">
+    <div class="container">
+      <div class="row row-xs">
         <!-- col -->
         <div class="col-12 col-md-12 col-lg-12 col-xl-12 mg-t-10 mg-lg-t-0">
           <div class="row row-xs">
@@ -23,6 +16,17 @@
               class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 mg-t-10 mg-lg-t-0"
             >
               <div class="card">
+                <div
+                  class="bd-b-0 pd-t-20 pd-lg-t-20 pd-l-20 pd-lg-l-20 d-flex flex-column flex-sm-row align-items-sm-start justify-content-sm-between"
+                >
+                  <div>
+                    <h4 class="mg-b-5 text-primary tx-bold">ลงทะเบียนบริษัท</h4>
+                    <p class="mg-b-0">
+                      กรุณากรอกข้อมูลบริษัท ผู้ประสานงาน
+                      และรายละเอียดที่เกี่ยวข้องให้ครบถ้วน
+                    </p>
+                  </div>
+                </div>
                 <div class="card-body">
                   <div>
                     <ul class="nav nav-line" role="">
@@ -82,7 +86,7 @@
                                   type="tel"
                                   class="form-control"
                                   v-model="inputCompTaxNo"
-                                  v-mask="'#-####-#####-##-#'"
+                                  v-mask="'#############'"
                                   placeholder="กรอกเลขประจําตัวผู้เสียภาษีของบริษัท"
                                 />
                               </div>
@@ -235,9 +239,10 @@
 </template>
 <script>
 import { useToast } from "vue-toastification";
-import Connector from "../../../services/connector";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
+import axios from "axios";
+import configs from "@/config/config";
 // import router from "../../router";
 
 function unmask(maskedValue, mask) {
@@ -299,22 +304,29 @@ export default {
     this.loading = false;
     if (this.loggedIn) {
       this.$router.push("/");
-    } else {
-      this.service = new Connector();
     }
   },
   mounted() {
     this.isLoading = true;
-    this.service.get_content("PDPA").then((data) => {
-      this.content = data.content.CON_DATA;
-      this.isLoading = false;
-    });
+    axios
+      .get(configs.urlApi, {
+        params: {
+          action: "/fetch/get-content",
+          code: "PDPA",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        let data = response.data;
+        this.content = data.content.CON_DATA;
+        this.isLoading = false;
+      });
   },
   methods: {
     goBack() {
       window.location.replace("/");
     },
-    goSubmit() {
+    async goSubmit() {
       let isError = false;
       let txtError = "";
       if (this.inputCompCode === "") {
@@ -331,11 +343,29 @@ export default {
       } else {
         this.inputCompTaxNoRaw = unmask(
           this.inputCompTaxNo,
-          "#-####-#####-##-#"
+          "#############"
         ).toString();
         if (this.inputCompTaxNoRaw.length != 13) {
           isError = true;
           txtError += "<li>เลขประจำตัวผู้เสียภาษีไม่ถูกต้อง</li>";
+        } else {
+          console.log(this.inputCompTaxNoRaw);
+          await axios
+            .get(configs.urlApi, {
+              params: {
+                action: "/sm/company/is-duplicate-register",
+                inputCompTaxNo: this.inputCompTaxNoRaw,
+              },
+            })
+            .then((response) => {
+              console.log(response.data);
+              let data = response.data;
+              if (data.is_duplicated === 1) {
+                isError = true;
+                txtError +=
+                  "<li>เลขประจำตัวผู้้เสียภาษีนี้มีการลงทะเบียนแล้ว</li>";
+              }
+            });
         }
       }
       if (this.inputUserName === "") {
@@ -394,21 +424,22 @@ export default {
           this.inputUserConfirmPassword
         );
         formData.append("inputUserAccept", this.inputUserAccept);
-        this.service.company_submit_register(formData).then((data) => {
+        formData.append("action", "sm/company/register");
+        axios.post(configs.urlApi, formData).then((response) => {
+          let data = response.data;
           console.log(data);
           if (data.is_success === 1) {
             this.$swal
               .fire({
-                html: "ดำเนินการสำเร็จ",
-
-                title: "ดำเนินการสำเร็จ",
+                html: "บันทึกแบบฟอร์มลงทะเบียนเรียบร้อยแล้ว<br />กรุณารอการตรวจสอบจากเจ้าหน้าที่",
+                title: "ลงทะเบียนสำเร็จ",
                 icon: "success",
                 showCancelButton: false,
                 confirmButtonText: "ตกลง",
               })
               .then((result) => {
                 if (result.isConfirmed) {
-                  window.location.replace("/registration/tracking");
+                  window.location.replace("/sm/company/tracking");
                 }
               });
           } else {

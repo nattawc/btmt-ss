@@ -14,7 +14,6 @@
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 import { useToast } from "vue-toastification";
-import Connector from "../services/connector";
 import feather from "feather-icons";
 const icons = Object.keys(feather.icons);
 
@@ -51,9 +50,7 @@ export default {
       return this.$store.state.prefix;
     },
   },
-  created() {
-    this.service = new Connector();
-  },
+  created() {},
   mounted() {
     this.isLoading = true;
     this.isLoading = false;

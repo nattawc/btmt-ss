@@ -55,56 +55,271 @@
             ><vue-feather type="airplay"></vue-feather> <span>หน้าหลัก</span>
           </router-link>
         </li>
+        <li class="nav-label mg-t-15" v-if="!loggedIn">User Interface</li>
+        <li
+          v-if="!loggedIn"
+          class="nav-item"
+          :class="[currentPath === '/login' ? 'active' : '']"
+        >
+          <router-link
+            to="/login"
+            class="nav-link"
+            @click="currentPath = '/login'"
+            ><vue-feather type="lock"></vue-feather> <span>เข้าสู่ระบบ</span>
+          </router-link>
+        </li>
         <li class="nav-label mg-t-15">Systems</li>
         <li
           class="nav-item with-sub"
-          :class="[currentPath.search('/sm') !== -1 ? 'active show' : '']"
+          :class="[currentPath.search('/company') !== -1 ? 'active show' : '']"
         >
           <span class="nav-link"
-            ><vue-feather type="user-check"></vue-feather>
-            <span>ฐานข้อมูลผู้รับเหมา</span>
+            ><vue-feather type="briefcase"></vue-feather>
+            <span>ฐานข้อมูลบริษัท</span>
           </span>
 
           <ul>
             <li
               class=""
               :class="[
-                currentPath === '/sm/company/register-form'
-                  ? 'active show'
-                  : '',
+                currentPath === '/company/register' ? 'active show' : '',
               ]"
             >
-              <router-link to="/sm/company/register-form"
-                >ลงทะเบียนบริษัท
-              </router-link>
+              <router-link to="/company/register">ลงทะเบียนบริษัท </router-link>
             </li>
             <li
               class=""
               :class="[
-                currentPath === '/sm/company/register-tracking'
-                  ? 'active show'
-                  : '',
+                currentPath === '/company/tracking' ? 'active show' : '',
               ]"
             >
-              <router-link to="/sm/company/register-tracking"
-                >ผลการลงทะเบียน
+              <router-link to="/company/tracking">ผลการลงทะเบียน </router-link>
+            </li>
+            <li
+              class=""
+              :class="[currentPath === '/company/approve' ? 'active show' : '']"
+            >
+              <router-link to="/company/approve"
+                >อนุมัติการลงทะเบียน
               </router-link>
             </li>
             <li
               class=""
+              :class="[currentPath === '/company/all' ? 'active show' : '']"
+            >
+              <router-link to="/company/all">รายชื่อบริษัททั้งหมด </router-link>
+            </li>
+          </ul>
+        </li>
+        <li
+          class="nav-item with-sub"
+          :class="[
+            currentPath.search('/subcontract') !== -1 ? 'active show' : '',
+          ]"
+        >
+          <span class="nav-link"
+            ><vue-feather type="folder"></vue-feather>
+            <span>ฐานข้อมูลผู้รับเหมา</span>
+          </span>
+
+          <ul>
+            <li
+              class=""
+              :class="[currentPath === '/subcontract/all' ? 'active show' : '']"
+            >
+              <router-link to="/subcontract/all">รายชื่อผู้รับเหมา</router-link>
+            </li>
+            <li
+              class=""
               :class="[
-                currentPath === '/sm/subcontract/lists' ? 'active show' : '',
+                currentPath === '/subcontract/training/submit'
+                  ? 'active show'
+                  : '',
               ]"
             >
-              <router-link to="/" v-if="currentUser"
-                >รายชื่อพนักงาน</router-link
+              <router-link to="/subcontract/training/submit"
+                >ยื่นผลสอบผู้รับเหมา</router-link
               >
+            </li>
+            <li
+              class=""
+              :class="[
+                currentPath === '/subcontract/card' ? 'active show' : '',
+              ]"
+            >
+              <router-link to="/subcontract/card"
+                >พิมพ์บัตรผู้รับเหมา</router-link
+              >
+            </li>
+            <li
+              class=""
+              :class="[
+                currentPath === '/subcontract/approve' ? 'active show' : '',
+              ]"
+            >
+              <router-link to="/subcontract/approve"
+                >อนุมัติผู้รับเหมาใหม่</router-link
+              >
+            </li>
+            <li
+              class=""
+              :class="[
+                currentPath === '/subcontract/training/approve'
+                  ? 'active show'
+                  : '',
+              ]"
+            >
+              <router-link to="/subcontract/training/approve"
+                >อนุมัติผลสอบ</router-link
+              >
+            </li>
+            <li
+              class=""
+              :class="[
+                currentPath === '/subcontract/blacklist' ? 'active show' : '',
+              ]"
+            >
+              <router-link to="/subcontract/blacklist"
+                >รายชื่อแบล็คลิสต์</router-link
+              >
+            </li>
+          </ul>
+        </li>
+        <li
+          class="nav-item with-sub"
+          :class="[
+            currentPath.search('/work-on-holiday/') !== -1 ? 'active show' : '',
+          ]"
+        >
+          <span class="nav-link"
+            ><vue-feather type="layers"></vue-feather>
+            <span>แบบฟอร์มขอเข้าทำงาน</span>
+          </span>
+
+          <ul>
+            <li
+              class=""
+              :class="[
+                currentPath === '/work-on-holiday/form' ? 'active show' : '',
+              ]"
+            >
+              <router-link to="/work-on-holiday/form"
+                >กรอกแบบฟอร์ม
+              </router-link>
+            </li>
+            <li
+              class=""
+              :class="[
+                currentPath === '/work-on-holiday/approve' ? 'active show' : '',
+              ]"
+            >
+              <router-link to="/work-on-holiday/approve"
+                >อนุมัติแบบฟอร์ม
+              </router-link>
+            </li>
+            <li
+              class=""
+              :class="[
+                currentPath === '/work-on-holiday/list' ? 'active show' : '',
+              ]"
+            >
+              <router-link to="/work-on-holiday/list"
+                >รายชื่อบริษัทที่เข้าทำงาน
+              </router-link>
+            </li>
+            <li
+              class=""
+              :class="[
+                currentPath === '/work-on-holiday/setup-calendar'
+                  ? 'active show'
+                  : '',
+              ]"
+            >
+              <router-link to="/work-on-holiday/setup-calendar"
+                >ตั้งปฏิทินวันหยุด
+              </router-link>
+            </li>
+          </ul>
+        </li>
+        <li
+          class="nav-item"
+          :class="[currentPath === '/guard/inout' ? 'active' : '']"
+        >
+          <router-link
+            to="/qr/subcontract"
+            class="nav-link"
+            @click="currentPath = '/'"
+            ><vue-feather type="user-check"></vue-feather>
+            <span>สแกนเข้าออก</span>
+          </router-link>
+        </li>
+        <li
+          class="nav-item with-sub"
+          :class="[currentPath.search('/report') !== -1 ? 'active show' : '']"
+        >
+          <span class="nav-link"
+            ><vue-feather type="clipboard"></vue-feather>
+            <span>รายงาน</span>
+          </span>
+
+          <ul>
+            <li
+              class=""
+              :class="[
+                currentPath === '/report/guard-inout' ? 'active show' : '',
+              ]"
+            >
+              <router-link to="/report/guard-inout"
+                >ประวัติการเข้าออก
+              </router-link>
+            </li>
+            <li
+              class=""
+              :class="[
+                currentPath === '/report/subcontract-card-expire'
+                  ? 'active show'
+                  : '',
+              ]"
+            >
+              <router-link to="/report/subcontract-card-expire"
+                >บัตรผู้รับเหมาหมดอายุ
+              </router-link>
+            </li>
+          </ul>
+        </li>
+        <li
+          class="nav-item with-sub"
+          :class="[currentPath.search('/kb') !== -1 ? 'active show' : '']"
+        >
+          <span class="nav-link"
+            ><vue-feather type="help-circle"></vue-feather>
+            <span>คู่มือการใช้งานระบบ</span>
+          </span>
+
+          <ul>
+            <li
+              class=""
+              :class="[
+                currentPath === '/kb/subcontractor' ? 'active show' : '',
+              ]"
+            >
+              <router-link to="/kb/subcontractor">ระบบผู้รับเหมา </router-link>
+            </li>
+            <li
+              class=""
+              :class="[
+                currentPath === '/kb/work-on-holiday' ? 'active show' : '',
+              ]"
+            >
+              <router-link to="/kb/work-on-holiday"
+                >เข้าทำงานวันหยุด
+              </router-link>
             </li>
           </ul>
         </li>
       </ul>
       <ul class="nav nav-aside"></ul>
-      <ul class="nav nav-aside" v-if="currentUser">
+      <ul class="nav nav-aside">
         <li class="nav-label mg-t-15">User Interface</li>
         <li class="nav-item">
           <a href="#" @click="handleLogout" class="nav-link"

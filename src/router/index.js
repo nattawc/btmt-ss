@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Index from "../pages/index.vue";
-import smCompanyRegisterForm from "../pages/sm/company/register-form.vue";
-import smCompanyRegisterTracking from "../pages/sm/company/register-tracking.vue";
+import Login from "../pages/login.vue";
+import SMCompanyRegister from "../pages/sm/company/register.vue";
+import SMCompanyTracking from "../pages/sm/company/tracking.vue";
 const routes = [
   {
     path: "/",
@@ -11,16 +12,16 @@ const routes = [
   {
     path: "/login",
     props: true,
-    component: Index,
+    component: Login,
   },
 
   {
-    path: "/sm/company/register-form",
-    component: smCompanyRegisterForm,
+    path: "/sm/company/register",
+    component: SMCompanyRegister,
   },
   {
-    path: "/sm/company/register-tracking",
-    component: smCompanyRegisterTracking,
+    path: "/sm/company/tracking",
+    component: SMCompanyTracking,
   },
 ];
 
@@ -31,10 +32,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // console.log(to.path);
   const publicPages = [
-    "/",
     "/login",
-    "/sm/company/register-form",
-    "/sm/company/register-tracking",
+    "/sm/company/register",
+    "/sm/company/tracking",
   ];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem("user");
@@ -45,7 +45,8 @@ router.beforeEach((to, from, next) => {
   // trying to access a restricted page + not logged in
   // redirect to login page
   if (authRequired && !loggedIn) {
-    next("/login");
+    next();
+    // next("/login");
   } else {
     next();
   }
