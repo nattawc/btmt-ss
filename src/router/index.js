@@ -1,8 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Index from "../pages/index.vue";
 import Login from "../pages/login.vue";
-import SMCompanyRegister from "../pages/sm/company/register.vue";
-import SMCompanyTracking from "../pages/sm/company/tracking.vue";
+import CompanyRegister from "../pages/company/register.vue";
+import CompanyTracking from "../pages/company/tracking.vue";
+import CompanyApprove from "../pages/company/approve.vue";
+import CompanyAll from "../pages/company/all.vue";
+
+import SubContractRegister from "../pages/subcontract/register.vue";
+
 const routes = [
   {
     path: "/",
@@ -14,14 +19,27 @@ const routes = [
     props: true,
     component: Login,
   },
-
+  // --------------------
   {
-    path: "/sm/company/register",
-    component: SMCompanyRegister,
+    path: "/company/register",
+    component: CompanyRegister,
   },
   {
-    path: "/sm/company/tracking",
-    component: SMCompanyTracking,
+    path: "/company/tracking",
+    component: CompanyTracking,
+  },
+  {
+    path: "/company/approve",
+    component: CompanyApprove,
+  },
+  {
+    path: "/company/all",
+    component: CompanyAll,
+  },
+  // --------------------
+  {
+    path: "/subcontract/register",
+    component: SubContractRegister,
   },
 ];
 

@@ -553,14 +553,6 @@
   border-bottom: 2px solid #0059ff;
   background-color: #1c273c;
 }
-select.form-control {
-  min-width: 60px !important
-}
-select option {
- 
-    background: #172032;
-    border: none;
-}
 
 .aside-header {
   background-color: #2baf2b;

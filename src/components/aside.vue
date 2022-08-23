@@ -74,8 +74,8 @@
           :class="[currentPath.search('/company') !== -1 ? 'active show' : '']"
         >
           <span class="nav-link"
-            ><vue-feather type="briefcase"></vue-feather>
-            <span>ฐานข้อมูลบริษัท</span>
+            ><vue-feather type="database"></vue-feather>
+            <span>ข้อมูลบริษัท</span>
           </span>
 
           <ul>
@@ -118,11 +118,21 @@
           ]"
         >
           <span class="nav-link"
-            ><vue-feather type="folder"></vue-feather>
-            <span>ฐานข้อมูลผู้รับเหมา</span>
+            ><vue-feather type="user"></vue-feather>
+            <span>ข้อมูลผู้รับเหมา</span>
           </span>
 
           <ul>
+            <li
+              class=""
+              :class="[
+                currentPath === '/subcontract/register' ? 'active show' : '',
+              ]"
+            >
+              <router-link to="/subcontract/register"
+                >ลงทะเบียนผู้รับเหมา</router-link
+              >
+            </li>
             <li
               class=""
               :class="[currentPath === '/subcontract/all' ? 'active show' : '']"
@@ -336,7 +346,6 @@
 import { version } from "../../package";
 import AuthService from "../services/authen";
 import feather from "feather-icons";
-
 const icons = Object.keys(feather.icons);
 export default {
   data() {

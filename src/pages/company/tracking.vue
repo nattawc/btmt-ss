@@ -107,7 +107,7 @@ export default {
   data() {
     return {
       content: null,
-      isLoading: true,
+      isLoading: false,
       fullPage: true,
 
       inputCompTaxNo: "",
@@ -131,28 +131,8 @@ export default {
     },
   },
   service: null,
-  created() {
-    this.loading = false;
-    if (this.loggedIn) {
-      this.$router.push("/");
-    }
-  },
-  mounted() {
-    this.isLoading = true;
-    axios
-      .get(configs.urlApi, {
-        params: {
-          action: "/fetch/get-content",
-          code: "PDPA",
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        let data = response.data;
-        this.content = data.content.CON_DATA;
-        this.isLoading = false;
-      });
-  },
+  created() {},
+  mounted() {},
   methods: {
     goBack() {
       window.location.replace("/");
@@ -176,14 +156,16 @@ export default {
       }
 
       if (!isError) {
+        this.isLoading = true;
+
         let formData = new FormData();
         formData.append("inputCompTaxNo", this.inputCompTaxNo);
-        formData.append("action", "sm/company/tracking");
+        formData.append("action", "/company/tracking");
         axios.post(configs.urlApi, formData).then((response) => {
           let data = response.data;
 
           if (data.is_success === 1) {
-            if (data.company_status === "APPROVE") {
+            if (data.info.COM_APPROVE_STATUS === "APPROVE") {
               this.$swal
                 .fire({
                   html: "ข้อมูลการลงทะเบียนได้รับการอนุมัติแล้ว<br />คุณสามารถเข้าใช้งานระบบด้วยอีเมล์และรหัสผ่านที่ตั้งไว้",
@@ -197,18 +179,18 @@ export default {
                     window.location.replace("/login");
                   }
                 });
-            } else if (data.company_status === "REJECT") {
+            } else if (data.info.COM_APPROVE_STATUS === "REJECT") {
               this.$swal({
                 html:
-                  "ทางเจ้าหน้าที่ไม่อนุมัติการลงทะเบียน เนื่องจาก" +
-                  data.reject_reason,
+                  "ทางเจ้าหน้าที่ไม่อนุมัติการลงทะเบียน<br />เนื่องจาก" +
+                  data.info.COM_APPROVE_REASON,
                 title: "ไม่อนุมัติการลงทะเบียน",
                 icon: "error",
                 showCancelButton: false,
                 confirmButtonColor: "#b91c1c",
                 confirmButtonText: "ตกลง",
               });
-            } else if (data.company_status === "SUBMIT") {
+            } else if (data.info.COM_APPROVE_STATUS === "SUBMIT") {
               this.$swal.fire({
                 html: "ข้อมูลการลงทะเบียนอยู่ระหว่างการตรวจสอบ",
                 title: "รอการตรวจสอบ",
@@ -228,6 +210,7 @@ export default {
             });
           }
         });
+        this.isLoading = false;
       } else {
         this.$swal({
           html: "<ul>" + txtError + "</ul>",

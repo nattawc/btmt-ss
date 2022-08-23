@@ -127,7 +127,7 @@
                                   class="form-control"
                                   v-model="inputUserMobile"
                                   placeholder="กรอกเบอร์มือถือ"
-                                  v-mask="'##-####-####'"
+                                  v-mask="'###-###-####'"
                                 />
                               </div>
                             </div>
@@ -353,7 +353,7 @@ export default {
           await axios
             .get(configs.urlApi, {
               params: {
-                action: "/sm/company/is-duplicate-register",
+                action: "/company/is-duplicate-register",
                 inputCompTaxNo: this.inputCompTaxNoRaw,
               },
             })
@@ -378,7 +378,7 @@ export default {
       } else {
         this.inputUserMobileRaw = unmask(
           this.inputUserMobile,
-          "#-####-#####-##-#"
+          "###-###-####"
         ).toString();
         if (this.inputUserMobileRaw.length != 10) {
           isError = true;
@@ -414,9 +414,9 @@ export default {
         formData.append("inputCompName", this.inputCompName);
         formData.append("inputCompCode", this.inputCompCode);
         formData.append("inputCompAddress", this.inputCompAddress);
-        formData.append("inputCompTaxNo", this.inputCompTaxNo);
+        formData.append("inputCompTaxNo", this.inputCompTaxNoRaw);
         formData.append("inputUserName", this.inputUserName);
-        formData.append("inputUserMobile", this.inputUserMobile);
+        formData.append("inputUserMobile", this.inputUserMobileRaw);
         formData.append("inputUserEmail", this.inputUserEmail);
         formData.append("inputUserPassword", this.inputUserPassword);
         formData.append(
@@ -424,7 +424,7 @@ export default {
           this.inputUserConfirmPassword
         );
         formData.append("inputUserAccept", this.inputUserAccept);
-        formData.append("action", "sm/company/register");
+        formData.append("action", "/company/register");
         axios.post(configs.urlApi, formData).then((response) => {
           let data = response.data;
           console.log(data);
@@ -439,7 +439,7 @@ export default {
               })
               .then((result) => {
                 if (result.isConfirmed) {
-                  window.location.replace("/sm/company/tracking");
+                  window.location.replace("/company/tracking");
                 }
               });
           } else {
