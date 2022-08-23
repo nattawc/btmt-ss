@@ -21,7 +21,7 @@ const routes = [
     component: Login,
   },
   {
-    path: "/tranining",
+    path: "/training",
     props: true,
     component: Training,
   },

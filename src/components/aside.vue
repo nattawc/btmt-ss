@@ -57,12 +57,12 @@
         </li>
         <li
           class="nav-item"
-          :class="[currentPath === '/tranining' ? 'active' : '']"
+          :class="[currentPath === '/training' ? 'active' : '']"
         >
           <router-link
-            to="/tranining"
+            to="/training"
             class="nav-link"
-            @click="currentPath = '/tranining'"
+            @click="currentPath = '/training'"
             ><vue-feather type="tv"></vue-feather>
             <span>การอบรมและทดสอบ</span>
           </router-link>
