@@ -251,6 +251,16 @@
                       </div>
                       <ul class="nav nav-line" role="">
                         <li class="nav-item">
+                          <a class="nav-link active tx-bold">เจ้าของงาน</a>
+                        </li>
+                      </ul>
+
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <ul class="nav nav-line" role="">
+                        <li class="nav-item">
                           <a class="nav-link active tx-bold">อัพโหลดไฟล์แนบ</a>
                         </li>
                       </ul>
@@ -259,6 +269,7 @@
                           <tr>
                             <th>ชื่อไฟล์</th>
                             <th>วันที่อัพโหลดไฟล์</th>
+                            <th>วันที่หมดอายุ</th>
                             <th>รายละเอียดเพิ่มเติม (ถ้ามี)</th>
                             <th>ดำเนินการ</th>
                           </tr>

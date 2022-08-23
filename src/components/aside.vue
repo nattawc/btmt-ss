@@ -55,9 +55,20 @@
             ><vue-feather type="airplay"></vue-feather> <span>หน้าหลัก</span>
           </router-link>
         </li>
+        <li
+          class="nav-item"
+          :class="[currentPath === '/tranining' ? 'active' : '']"
+        >
+          <router-link
+            to="/tranining"
+            class="nav-link"
+            @click="currentPath = '/tranining'"
+            ><vue-feather type="tv"></vue-feather>
+            <span>การอบรมและทดสอบ</span>
+          </router-link>
+        </li>
         <li class="nav-label mg-t-15" v-if="!loggedIn">User Interface</li>
         <li
-          v-if="!loggedIn"
           class="nav-item"
           :class="[currentPath === '/login' ? 'active' : '']"
         >
@@ -142,13 +153,13 @@
             <li
               class=""
               :class="[
-                currentPath === '/subcontract/training/submit'
+                currentPath === '/subcontract/training/upload'
                   ? 'active show'
                   : '',
               ]"
             >
-              <router-link to="/subcontract/training/submit"
-                >ยื่นผลสอบผู้รับเหมา</router-link
+              <router-link to="/subcontract/training/upload"
+                >อัพโหลดผลสอบ</router-link
               >
             </li>
             <li
@@ -297,6 +308,7 @@
             </li>
           </ul>
         </li>
+
         <li
           class="nav-item with-sub"
           :class="[currentPath.search('/kb') !== -1 ? 'active show' : '']"

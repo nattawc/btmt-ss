@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Index from "../pages/index.vue";
 import Login from "../pages/login.vue";
+import Training from "../pages/training.vue";
 import CompanyRegister from "../pages/company/register.vue";
 import CompanyTracking from "../pages/company/tracking.vue";
 import CompanyApprove from "../pages/company/approve.vue";
@@ -18,6 +19,11 @@ const routes = [
     path: "/login",
     props: true,
     component: Login,
+  },
+  {
+    path: "/tranining",
+    props: true,
+    component: Training,
   },
   // --------------------
   {
