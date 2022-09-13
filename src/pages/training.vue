@@ -88,43 +88,68 @@
                             v-for="(c1, index1) in courses"
                             :key="index1"
                           >
-                            <!-- <button
-                              class="btn btn-success pull-right mg-r-10"
-                              v-if="c1.info.TRN_HAVE_CHILD === '0'"
-                            >
-                              เลือก
-                            </button> -->
-                            <b
-                              >{{ c1.info.TRN_CODE }}. {{ c1.info.TRN_NAME }}</b
-                            >
+                            <div class="d-flex">
+                              <b
+                                >{{ c1.info.TRN_CODE }}.
+                                {{ c1.info.TRN_NAME }}</b
+                              >
+                              <button
+                                class="btn btn-sm btn-icon btn-dark pull-right mg-l-auto d-flex align-self-center"
+                                v-if="c1.info.TRN_HAVE_CHILD === '0'"
+                                @click="doNext()"
+                              >
+                                <vue-feather type="arrow-right"></vue-feather>
+                              </button>
+                            </div>
 
-                            <ul class="list-group mg-t-10">
+                            <ul
+                              class="list-group mg-t-10"
+                              v-if="c1.info.TRN_HAVE_CHILD === '1'"
+                            >
                               <li
                                 class="list-group-item"
                                 v-for="(c2, index2) in c1.child"
                                 :key="index2"
                               >
-                                <!-- <button
-                                  class="btn btn-success pull-right mg-r-10"
-                                  v-if="c2.info.TRN_HAVE_CHILD === '0'"
+                                <div class="d-flex">
+                                  <b class="text-success"
+                                    >{{ c2.info.TRN_CODE }}.
+                                    {{ c2.info.TRN_NAME }}</b
+                                  >
+                                  <button
+                                    class="btn btn-sm btn-icon btn-success pull-right mg-l-auto d-flex align-self-center"
+                                    v-if="c2.info.TRN_HAVE_CHILD === '0'"
+                                    @click="doNext()"
+                                  >
+                                    <vue-feather
+                                      type="arrow-right"
+                                    ></vue-feather>
+                                  </button>
+                                </div>
+                                <ul
+                                  class="list-group mg-t-10"
+                                  v-if="c2.info.TRN_HAVE_CHILD === '1'"
                                 >
-                                  เลือก
-                                </button> -->
-                                {{ c2.info.TRN_CODE }}. {{ c2.info.TRN_NAME }}
-                                <ul class="list-group mg-t-10">
                                   <li
                                     class="list-group-item"
                                     v-for="(c3, index2) in c2.child"
                                     :key="index2"
                                   >
-                                    <!-- <button
-                                      class="btn btn-success pull-right mg-r-10"
-                                      v-if="c3.info.TRN_HAVE_CHILD === '0'"
-                                    >
-                                      เลือก
-                                    </button> -->
-                                    {{ c3.info.TRN_CODE }}.
-                                    {{ c3.info.TRN_NAME }}
+                                    <div class="d-flex">
+                                      <span
+                                        >{{ c3.info.TRN_CODE }}.
+                                        {{ c3.info.TRN_NAME }}</span
+                                      >
+                                      <button
+                                        class="btn btn-sm btn-icon btn-dark pull-right mg-l-auto d-flex align-self-center"
+                                        v-if="c3.info.TRN_HAVE_CHILD === '0'"
+                                        @click="doNext()"
+                                      >
+                                        <vue-feather
+                                          type="arrow-right"
+                                        ></vue-feather>
+                                      </button>
+                                    </div>
                                   </li>
                                 </ul>
                               </li>
@@ -192,6 +217,7 @@
                           <br /><br /><br />
                           <center>
                             <a
+                              target="_blank"
                               href="https://forms.office.com/Pages/ResponsePage.aspx?id=Vur9oQEyAE2bdmYTOIUFV9R6i9_alLhHsMr7ZNMv0TJUQ1lPVVpWR0lPVlZNSUo0RjAwQ0VGOUZGQS4u&qrcode=true"
                               class="btn btn-lg btn-dark pd-x-20"
                             >
@@ -204,13 +230,17 @@
                     </div>
                     <div class="actions clearfix">
                       <ul role="menu" aria-label="Pagination">
-                        <li class="disabled" aria-disabled="true">
+                        <li
+                          class="disabled"
+                          aria-disabled="true"
+                          v-if="step <= 3 && step > 1"
+                        >
                           <a role="menuitem" @click="doPrev()">ย้อนกลับ</a>
                         </li>
                         <li
                           aria-hidden="false"
                           aria-disabled="false"
-                          v-if="step < 3"
+                          v-if="step < 3 && step > 1"
                         >
                           <a role="menuitem" @click="doNext()">ถัดไป</a>
                         </li>
@@ -309,5 +339,8 @@ video {
   /* override other styles to make responsive */
   width: 100% !important;
   height: auto !important;
+}
+.btn-icon {
+  padding: 3px 3px !important;
 }
 </style>
