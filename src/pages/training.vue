@@ -27,11 +27,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <div
-                    id="wizard3"
-                    role="application"
-                    class="wizard clearfix vertical"
-                  >
+                  <div id="wizard3" role="application" class="wizard clearfix">
                     <div class="steps clearfix">
                       <ul role="tablist">
                         <li
@@ -88,18 +84,18 @@
                             v-for="(c1, index1) in courses"
                             :key="index1"
                           >
-                            <div class="d-flex">
-                              <b
-                                >{{ c1.info.TRN_CODE }}.
-                                {{ c1.info.TRN_NAME }}</b
-                              >
+                            <div class="">
                               <button
-                                class="btn btn-sm btn-icon btn-dark pull-right mg-l-auto d-flex align-self-center"
+                                class="btn btn-sm btn-icon btn-dark mg-r-10"
                                 v-if="c1.info.TRN_HAVE_CHILD === '0'"
                                 @click="doNext()"
                               >
                                 <vue-feather type="arrow-right"></vue-feather>
                               </button>
+                              <b style="font-size: 16px"
+                                >{{ c1.info.TRN_CODE }}.
+                                {{ c1.info.TRN_NAME }}</b
+                              >
                             </div>
 
                             <ul
@@ -111,13 +107,9 @@
                                 v-for="(c2, index2) in c1.child"
                                 :key="index2"
                               >
-                                <div class="d-flex">
-                                  <b class="text-success"
-                                    >{{ c2.info.TRN_CODE }}.
-                                    {{ c2.info.TRN_NAME }}</b
-                                  >
+                                <div class=" ">
                                   <button
-                                    class="btn btn-sm btn-icon btn-success pull-right mg-l-auto d-flex align-self-center"
+                                    class="btn btn-sm btn-icon btn-success mg-r-10"
                                     v-if="c2.info.TRN_HAVE_CHILD === '0'"
                                     @click="doNext()"
                                   >
@@ -125,23 +117,24 @@
                                       type="arrow-right"
                                     ></vue-feather>
                                   </button>
+                                  <b class="text-success"
+                                    >{{ c2.info.TRN_CODE }}.
+                                    {{ c2.info.TRN_NAME }}</b
+                                  >
                                 </div>
                                 <ul
-                                  class="list-group mg-t-10"
+                                  class="list-groupx mg-t-10"
+                                  style="list-style: none"
                                   v-if="c2.info.TRN_HAVE_CHILD === '1'"
                                 >
                                   <li
-                                    class="list-group-item"
+                                    class="list-group-itemx mg-b-2"
                                     v-for="(c3, index2) in c2.child"
                                     :key="index2"
                                   >
-                                    <div class="d-flex">
-                                      <span
-                                        >{{ c3.info.TRN_CODE }}.
-                                        {{ c3.info.TRN_NAME }}</span
-                                      >
+                                    <div class="">
                                       <button
-                                        class="btn btn-sm btn-icon btn-dark pull-right mg-l-auto d-flex align-self-center"
+                                        class="btn btn-sm btn-icon btn-dark mg-r-10"
                                         v-if="c3.info.TRN_HAVE_CHILD === '0'"
                                         @click="doNext()"
                                       >
@@ -149,6 +142,10 @@
                                           type="arrow-right"
                                         ></vue-feather>
                                       </button>
+                                      <span
+                                        >{{ c3.info.TRN_CODE }}.
+                                        {{ c3.info.TRN_NAME }}</span
+                                      >
                                     </div>
                                   </li>
                                 </ul>
@@ -341,6 +338,6 @@ video {
   height: auto !important;
 }
 .btn-icon {
-  padding: 3px 3px !important;
+  padding: 1px 3px 1px !important;
 }
 </style>
