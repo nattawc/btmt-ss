@@ -88,7 +88,7 @@
                               <button
                                 class="btn btn-sm btn-icon btn-dark mg-r-10"
                                 v-if="c1.info.TRN_HAVE_CHILD === '0'"
-                                @click="doNext()"
+                                @click="doNext2(c1.info)"
                               >
                                 <vue-feather type="arrow-right"></vue-feather>
                               </button>
@@ -107,11 +107,11 @@
                                 v-for="(c2, index2) in c1.child"
                                 :key="index2"
                               >
-                                <div class=" ">
+                                <div class="">
                                   <button
                                     class="btn btn-sm btn-icon btn-success mg-r-10"
                                     v-if="c2.info.TRN_HAVE_CHILD === '0'"
-                                    @click="doNext()"
+                                    @click="doNext2(c2.info)"
                                   >
                                     <vue-feather
                                       type="arrow-right"
@@ -136,7 +136,7 @@
                                       <button
                                         class="btn btn-sm btn-icon btn-dark mg-r-10"
                                         v-if="c3.info.TRN_HAVE_CHILD === '0'"
-                                        @click="doNext()"
+                                        @click="doNext2(c3.info)"
                                       >
                                         <vue-feather
                                           type="arrow-right"
@@ -174,13 +174,10 @@
                           </li>
                         </ol>
                         <video controls="true">
-                          <source
-                            src="https://s3.ap-southeast-1.amazonaws.com/z.btmt365.com/training-subcontract/Safety+Rules+Contractor.mp4"
-                            type="video/mp4"
-                          />
+                          <source :src="urlMedia" type="video/mp4" />
 
                           บราวเซอร์ของคุณไม่รองรับการเล่นวิดีโอ กรุณา<a
-                            href="https://s3.ap-southeast-1.amazonaws.com/z.btmt365.com/training-subcontract/Safety+Rules+Contractor.mp"
+                            :href="urlMedia"
                             >คลิกที่นี่เพื่อดาวน์โหลดไฟล์</a
                           >
                         </video>
@@ -215,7 +212,7 @@
                           <center>
                             <a
                               target="_blank"
-                              href="https://forms.office.com/Pages/ResponsePage.aspx?id=Vur9oQEyAE2bdmYTOIUFV9R6i9_alLhHsMr7ZNMv0TJUQ1lPVVpWR0lPVlZNSUo0RjAwQ0VGOUZGQS4u&qrcode=true"
+                              :href="urlExam"
                               class="btn btn-lg btn-dark pd-x-20"
                             >
                               เริ่มทำแบบทดสอบ
@@ -272,6 +269,8 @@ export default {
       fullPage: true,
       step: 1,
       courses: null,
+      urlMedia: "",
+      urlExam: "",
     };
   },
   service: null,
@@ -317,6 +316,14 @@ export default {
   },
   methods: {
     doNext() {
+      console.log("(doNext) step = ", this.step);
+      if (this.step < 3) {
+        this.step += 1;
+      }
+    },
+    doNext2(c) {
+      this.urlExam = c.TRN_URL_EXAM;
+      this.urlMedia = c.TRN_URL_MEDIA;
       console.log("(doNext) step = ", this.step);
       if (this.step < 3) {
         this.step += 1;
